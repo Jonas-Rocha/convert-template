@@ -1,8 +1,10 @@
 //Obtendo input:
 
-const input = document.querySelector("input");
+const amount = document.getElementById("amount");
+const currency = document.getElementById("currency");
 
-input.addEventListener("keyup", () => {
-  const value = input.value;
-  console.log(value);
+// Manipulando o input "amount" para receber somente números.
+amount.addEventListener("input", () => {
+  const hasCharactersRegex = /\D+/g;
+  amount.value = amount.value.replace(hasCharactersRegex, "");
 });
