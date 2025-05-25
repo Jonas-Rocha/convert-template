@@ -4,31 +4,32 @@ const EUR = 6.42; // Valor do euro em reais
 const GBP = 7.65; // Valor da libra em reais
 
 // Obtendo os elementos do formulário.
-const form = document.querySelector("form"); // Seleciona o formulário inteiro
-const footer = document.querySelector("main footer"); // Seleciona o rodapé dentro da tag <main>
-const amount = document.getElementById("amount"); // Seleciona o campo onde o usuário digita o valor
-const currency = document.getElementById("currency"); // Seleciona o menu suspenso (select) das moedas
+const form = document.querySelector("form"); // Seleciona o formulário
+const footer = document.querySelector("main footer"); // Seleciona o rodapé da área principal
+const amount = document.getElementById("amount"); // Campo onde o usuário digita o valor em reais
+const currency = document.getElementById("currency"); // Menu onde o usuário escolhe a moeda (USD, EUR ou GBP)
+const description = document.getElementById("description"); // Área de texto onde será exibida a cotação da moeda
 
 // Manipulando o input "amount" para receber somente números.
 amount.addEventListener("input", () => {
-  const hasCharactersRegex = /\D+/g; // Expressão regular que pega tudo que NÃO for número
-  amount.value = amount.value.replace(hasCharactersRegex, ""); // Substitui qualquer caractere não numérico por nada (remove)
+  const hasCharactersRegex = /\D+/g; // Expressão regular que encontra tudo que NÃO for número
+  amount.value = amount.value.replace(hasCharactersRegex, ""); // Remove qualquer caractere que não for número
 });
 
 // Capturando o evento de submit no formulário.
 form.addEventListener("submit", (event) => {
-  event.preventDefault(event); // Impede o recarregamento da página quando o formulário é enviado
+  event.preventDefault(event); // Impede que a página seja recarregada ao enviar o formulário
 
-  // Verifica qual moeda foi escolhida e chama a função de conversão com os dados certos
+  // Verifica qual moeda foi escolhida e chama a função para fazer a conversão
   switch (currency.value) {
     case "USD":
-      convertCurrency(amount.value, USD, "US$"); // Converte para dólar
+      convertCurrency(amount.value, USD, "US$"); // Se a moeda for USD, chama a função com o valor do dólar
       break;
     case "EUR":
-      convertCurrency(amount.value, EUR, "€"); // Converte para euro
+      convertCurrency(amount.value, EUR, "€"); // Se for euro
       break;
     case "GBP":
-      convertCurrency(amount.value, GBP, "£"); // Converte para libra
+      convertCurrency(amount.value, GBP, "£"); // Se for libra
       break;
   }
 });
@@ -41,11 +42,13 @@ form.addEventListener("submit", (event) => {
 // Função para converter a moeda.
 function convertCurrency(amount, price, symbol) {
   try {
+    description.textContent = `${symbol} 1 = ${price}`; // Exibe a cotação no elemento <description>
+
     // Aplica a classe que exibe o footer para mostrar o resultado.
-    footer.classList.add("show-result"); // Mostra o rodapé com o resultado da conversão
+    footer.classList.add("show-result"); // Adiciona uma classe CSS que mostra o rodapé com os resultados
   } catch (error) {
-    console.log(error); // Mostra o erro no console
-    footer.classList.remove("show-result"); // Esconde o rodapé caso algo dê errado
-    alert("Não foi possível converter. Tente novamente mais tarde."); // Mostra alerta para o usuário
+    console.log(error); // Se der erro, mostra o erro no console
+    footer.classList.remove("show-result"); // Esconde o rodapé para não mostrar dados incorretos
+    alert("Não foi possível converter. Tente novamente mais tarde."); // Mostra mensagem de erro para o usuário
   }
 }
