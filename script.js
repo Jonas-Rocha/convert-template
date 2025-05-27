@@ -48,10 +48,18 @@ function convertCurrency(amount, price, symbol) {
     description.textContent = `${symbol} 1 = ${formatCurrencyBRL(price)}`; // Exibe a cotação no elemento <description>
 
     // Calcula o total.
-    let total = amount * price;
+    // let total = String(amount * price).replace(".", ","); poderia ser feito assim.
+    let total = amount * price; //"a"; para fazer a verificação "isNaN"
+
+    // Verifica se o resultado não é um número
+    if (isNaN(total)) {
+      alert("Por favor, digite o valor corretamente para converter.");
+    }
+
+    total = formatCurrencyBRL(total).replace("R$", "");
 
     // Exibe o resultado total.
-    result.textContent = total;
+    result.textContent = `${total} Reais`;
 
     // Aplica a classe que exibe o footer para mostrar o resultado.
     footer.classList.add("show-result"); // Adiciona uma classe CSS que mostra o rodapé com os resultados
