@@ -9,6 +9,7 @@ const footer = document.querySelector("main footer"); // Seleciona o rodapé da 
 const amount = document.getElementById("amount"); // Campo onde o usuário digita o valor em reais
 const currency = document.getElementById("currency"); // Menu onde o usuário escolhe a moeda (USD, EUR ou GBP)
 const description = document.getElementById("description"); // Área de texto onde será exibida a cotação da moeda
+const result = document.getElementById("result");
 
 // Manipulando o input "amount" para receber somente números.
 amount.addEventListener("input", () => {
@@ -42,7 +43,9 @@ form.addEventListener("submit", (event) => {
 // Função para converter a moeda.
 function convertCurrency(amount, price, symbol) {
   try {
-    description.textContent = `${symbol} 1 = ${price}`; // Exibe a cotação no elemento <description>
+    // Exibindo a cotação da moeda selecionada
+    // description.textContent = `${symbol} 1 = ${price}`; Exibe a cotação no elemento <description>
+    description.textContent = `${symbol} 1 = ${formatCurrencyBRL(price)}`; // Exibe a cotação no elemento <description>
 
     // Aplica a classe que exibe o footer para mostrar o resultado.
     footer.classList.add("show-result"); // Adiciona uma classe CSS que mostra o rodapé com os resultados
@@ -51,4 +54,14 @@ function convertCurrency(amount, price, symbol) {
     footer.classList.remove("show-result"); // Esconde o rodapé para não mostrar dados incorretos
     alert("Não foi possível converter. Tente novamente mais tarde."); // Mostra mensagem de erro para o usuário
   }
+}
+
+// Formata a moeda em Real brasileiro.
+function formatCurrencyBRL(value) {
+  //const value = poderia ser feito desta forma.
+  // Converte para número para utilizar o toLocaleString Para formatar no padrão BRL (R$ 00,00).
+  return Number(value).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 }
