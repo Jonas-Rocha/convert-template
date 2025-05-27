@@ -47,6 +47,12 @@ function convertCurrency(amount, price, symbol) {
     // description.textContent = `${symbol} 1 = ${price}`; Exibe a cotação no elemento <description>
     description.textContent = `${symbol} 1 = ${formatCurrencyBRL(price)}`; // Exibe a cotação no elemento <description>
 
+    // Calcula o total.
+    let total = amount * price;
+
+    // Exibe o resultado total.
+    result.textContent = total;
+
     // Aplica a classe que exibe o footer para mostrar o resultado.
     footer.classList.add("show-result"); // Adiciona uma classe CSS que mostra o rodapé com os resultados
   } catch (error) {
